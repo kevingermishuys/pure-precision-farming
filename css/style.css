@@ -139,8 +139,10 @@ a { color: var(--color-brand); text-decoration: none; }
 .topbar__contact { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .topbar__contact a { color: #c7d1de; display: inline-flex; align-items: center; gap: 6px; }
 .topbar__contact a:hover { color: var(--color-white); }
-.topbar__social { display: flex; align-items: center; gap: 10px; }
-.topbar__social a { color: #c7d1de; display: flex; }
+.topbar__social { display: flex; align-items: center; }
+/* Padding (not gap) carries the spacing so the tappable area — not just
+   the visible icon — clears the WCAG 24px touch-target minimum. */
+.topbar__social a { color: #c7d1de; display: flex; align-items: center; justify-content: center; padding: 8px; }
 .topbar__social a:hover { color: var(--color-accent); }
 @media (max-width: 700px) { .topbar__hours { display: none; } }
 
@@ -198,6 +200,12 @@ a { color: var(--color-brand); text-decoration: none; }
   .site-nav__cta { margin-left: 0; margin-top: 6px; justify-content: center; }
   .nav-toggle {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 44px is the accepted minimum comfortable touch target — the icon
+       itself stays visually small, centered inside the larger hit area. */
+    min-width: 44px;
+    min-height: 44px;
     background: none;
     border: none;
     cursor: pointer;
@@ -320,6 +328,22 @@ a { color: var(--color-brand); text-decoration: none; }
 
 /* ---- Tab pills (interactive) ---- */
 .tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+@media (max-width: 640px) {
+  /* Three pills wrap unevenly at phone widths (two fit a row, one is left
+     stranded on its own). A horizontal scroll row keeps them together and
+     reads as an obviously swipeable tab strip instead of a layout glitch. */
+  .tab-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin-inline: -4px;
+    padding-inline: 4px;
+  }
+  .tab-pills::-webkit-scrollbar { display: none; }
+  .tab-pill { flex: 0 0 auto; }
+}
 .tab-pill {
   font-family: var(--font-body);
   font-size: 0.88rem;
@@ -430,7 +454,14 @@ a { color: var(--color-brand); text-decoration: none; }
   gap: 24px;
   margin-top: 16px;
 }
-@media (max-width: 760px) { .process-row { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) {
+  .process-row { grid-template-columns: repeat(2, 1fr); }
+  /* The connector is a single horizontal line — on a 2-column grid it can
+     only ever bridge the first two steps, leaving the second row visibly
+     disconnected. Hiding it here reads as intentional; a half-drawn line
+     doesn't. */
+  .process-line { display: none; }
+}
 .process-line {
   position: absolute;
   top: 34px;
@@ -518,7 +549,11 @@ a { color: var(--color-brand); text-decoration: none; }
 .highlight-stat {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 2.4rem;
+  /* This span carries both short numbers ("5") and short phrases
+     ("After-hours") — clamp so the phrase-length stats don't blow up
+     to the numeral's size and wrap awkwardly on narrow screens. */
+  font-size: clamp(1.5rem, 5.5vw, 2.4rem);
+  line-height: 1.15;
   color: var(--color-ink);
   display: block;
   margin-bottom: 6px;
