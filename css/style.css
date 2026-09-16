@@ -330,7 +330,7 @@ a { color: var(--color-brand); text-decoration: none; }
 }
 
 /* ---- Tab pills (interactive) ---- */
-.tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 20px; }
 @media (max-width: 640px) {
   /* All three labels need to sit on one row on a phone — shrink the pill
      rather than let one wrap to its own line or hide behind a scroll. */
