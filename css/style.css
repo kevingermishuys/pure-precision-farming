@@ -254,6 +254,9 @@ a { color: var(--color-brand); text-decoration: none; }
   .hero-card { min-height: 620px; }
   /* Skip the heavy video download on phones — the still frame covers it */
   .hero-card__video { display: none; }
+  /* The drone shot is wide and the tractor sits far right of frame —
+     centered cover crops it out entirely on a narrow, tall viewport. */
+  .hero-card__bg { background-position: 80% 48%; }
 }
 .hero-card__scrim {
   position: absolute;
@@ -329,18 +332,15 @@ a { color: var(--color-brand); text-decoration: none; }
 /* ---- Tab pills (interactive) ---- */
 .tab-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
 @media (max-width: 640px) {
-  /* Three pills wrap unevenly at phone widths (two fit a row, one is left
-     stranded on its own). A horizontal scroll row keeps them together and
-     reads as an obviously swipeable tab strip instead of a layout glitch. */
-  .tab-pills {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-    margin-inline: -4px;
-    padding-inline: 4px;
-  }
+  /* All three labels need to sit on one row on a phone — shrink the pill
+     rather than let one wrap to its own line or hide behind a scroll. */
+  .tab-pills { flex-wrap: nowrap; gap: 6px; }
+  .tab-pill { flex: 1 1 0; padding: 8px 6px; font-size: 0.74rem; text-align: center; }
+}
+@media (max-width: 340px) {
+  /* Below iPhone SE width even the shrunk pills won't fit — fall back to
+     a scroll row rather than clipping "Our Heritage". */
+  .tab-pills { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .tab-pills::-webkit-scrollbar { display: none; }
   .tab-pill { flex: 0 0 auto; }
 }

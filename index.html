@@ -9,7 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/style.css?v=20260915c" />
+  <!-- Warm the connection to Google Maps' embed ahead of time so the iframe
+       isn't also paying for DNS/TLS setup when it finally starts loading. -->
+  <link rel="preconnect" href="https://www.google.com" />
+  <link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="/css/style.css?v=20260915e" />
 </head>
 <body>
 
@@ -68,7 +72,7 @@
         <div class="split" data-reveal>
           <div class="split__media">
             <div class="split__media-main">
-              <img src="/assets/img/pexels-consultation.jpg" alt="Talking through a precision farming setup" loading="lazy" style="object-position: 58% 30%;" />
+              <img src="/assets/img/pexels-spreader-tractor.jpg" alt="Tractor and spreader at work in a green field" loading="lazy" style="object-position: 58% 42%;" />
             </div>
           </div>
           <div>
@@ -130,7 +134,7 @@
                 </div>
               </div>
               <div class="carousel-card">
-                <div class="carousel-card__media"><img src="/assets/img/pexels-spreader-tractor.jpg" alt="Tractor applying product across a field" loading="lazy" style="object-position: 62% 55%;" /></div>
+                <div class="carousel-card__media"><img src="/assets/img/pexels-irrigation-pivot.jpg" alt="Spray misting from a center pivot irrigation system" loading="lazy" style="object-position: 50% 42%;" /></div>
                 <div class="carousel-card__body">
                   <h3>Precision Spraying</h3>
                   <p>Intelligent technologies that reduce overlap, minimize waste, and maximize every application.</p>
@@ -414,6 +418,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js"></script>
-  <script src="/js/main.js?v=20260915c"></script>
+  <script src="/js/main.js?v=20260915e"></script>
 </body>
 </html>

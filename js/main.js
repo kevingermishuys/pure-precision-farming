@@ -232,33 +232,20 @@ if (contactForm) {
 }
 
 /* ---------------------------------------------------------------
-   Deferred map embed
-   The Google Maps iframe pulls down a lot of script. Loading it up
-   front stalls the rest of the page, so we hold it back until it is
-   about to scroll into view and cross-fade it in once it reports
-   ready. The wrapper reserves its space, so nothing shifts.
+   Map embed
+   The map sits far down some pages (the homepage is ~9000px tall),
+   so waiting until it scrolls near the viewport left it visibly still
+   loading by the time a visitor arrived. An iframe loads on its own
+   thread and doesn't block the rest of the page, so instead we kick
+   it off right away and let it use however long the visitor spends
+   scrolling as head start — it fades in over the shimmer placeholder
+   whenever it finishes, which in practice is long before they reach it.
 --------------------------------------------------------------- */
 const mapEmbeds = document.querySelectorAll('[data-map]');
 
-if (mapEmbeds.length) {
-  const loadMap = (wrap) => {
-    const frame = wrap.querySelector('.map-frame');
-    if (!frame || frame.src) return;
-    frame.addEventListener('load', () => wrap.classList.add('is-loaded'), { once: true });
-    frame.src = frame.dataset.mapSrc;
-  };
-
-  if ('IntersectionObserver' in window) {
-    const mapObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        loadMap(entry.target);
-        observer.unobserve(entry.target);
-      });
-    }, { rootMargin: '400px 0px' });
-
-    mapEmbeds.forEach((wrap) => mapObserver.observe(wrap));
-  } else {
-    mapEmbeds.forEach(loadMap);
-  }
-}
+mapEmbeds.forEach((wrap) => {
+  const frame = wrap.querySelector('.map-frame');
+  if (!frame || frame.src) return;
+  frame.addEventListener('load', () => wrap.classList.add('is-loaded'), { once: true });
+  frame.src = frame.dataset.mapSrc;
+});
